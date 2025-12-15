@@ -16,7 +16,47 @@
 <main>
 
 </main>
-
+           <div class="contact-form-container">
+                <div class="contact-form-header">
+                    <h3>Send us a Message</h3>
+                    <p>Fill out the form below and we'll get back to you soon</p>
+                </div>
+                <form id="contactForm" class="contact-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Your Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="child_age">Reason for contacting</label>
+                        <select id="child_age" name="child_age">
+                            <option value="">Select option</option>
+                            <option value="2">Project collaboration</option>
+                            <option value="3">Hiring / Recruitment</option>
+                            <option value="4">Technical support</option>
+                            <option value="5">Workshop speaking</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" rows="5" required placeholder="Tell us how we can help you..."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                        <button type="reset" class="btn btn-secondary">Clear</button>
+                    </div>
+                </form>
+            </div>
+        
 <footer>
 
 </footer>
