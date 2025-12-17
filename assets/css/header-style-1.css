@@ -1,0 +1,88 @@
+/* Styling for the site header, Navigation menu and it's sub contents -----------------*/
+.site-header {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: static;
+    top: 0;
+    z-index: 1000;
+    padding: 1rem 0;
+}
+
+.header-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.site-title {
+    font-size: clamp(1rem, 2.5vw, 3rem);
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 1px;
+    text-align: center;
+    /*min-width: 170px;*/
+}
+
+.main-nav {
+    justify-self: end;
+}
+
+.main-nav ul {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 2rem;
+}
+
+.main-nav li {
+    margin: 0;
+}
+
+.main-nav a {
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    min-width: 100px;
+    text-align: center;
+}
+
+.main-nav a:hover {
+    color: #2c3e50;
+    background-color: #f0f0f0;
+}
+
+.main-nav a:active,
+.main-nav a:focus {
+    color: #1a252f;
+    background-color: #e0e0e0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header-grid {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+
+    .main-nav {
+        justify-self: center;
+    }
+
+    .main-nav ul {
+        grid-template-columns: repeat(2, auto);
+        gap: 1rem;
+    }
+
+    .site-title {
+        font-size: 1.5rem;
+    }
+}
