@@ -1,10 +1,22 @@
-/* Styling for the site header, Navigation menu and it's sub contents -----------------*/
+
 .site-header {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--neutral-0) 10%, transparent);
     position: static;
     top: 0;
     z-index: 1000;
     padding: 1rem 0;
+    background: var(--color-bg);
+    border-radius: 12px;
+
+    /* subtle transition for shadow and movement */
+    transition: transform 280ms cubic-bezier(.2, .9, .2, 1), box-shadow 320ms cubic-bezier(.2, .9, .2, 1);
+    will-change: transform, box-shadow;
+}
+
+/* lift the header slightly on pointer hover (non-intrusive) */
+.site-header:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px color-mix(in srgb, var(--neutral-0) 12%, transparent);
 }
 
 .header-grid {
@@ -23,9 +35,19 @@
     margin: 0;
     letter-spacing: 1px;
     text-align: center;
-    /*min-width: 170px;*/
+    color: var(--color-text);
+    transition: transform 260ms cubic-bezier(.2, .9, .2, 1), color 260ms ease;
+    transform-origin: left center;
 }
 
+/* give the title a subtle accent on hover/focus */
+.site-title:hover,
+.site-title:focus {
+    color: var(--color-primary);
+    transform: translateY(-2px) scale(1.01);
+}
+
+/* Navigation layout */
 .main-nav {
     justify-self: end;
 }
@@ -43,27 +65,67 @@
     margin: 0;
 }
 
+/* nav link base styles + transition */
 .main-nav a {
+    position: relative;
     text-decoration: none;
     font-weight: 500;
     font-size: 1rem;
     padding: 0.5rem 1rem;
     border-radius: 4px;
-    transition: all 0.3s ease;
+    transition: background-color 220ms ease, color 220ms ease, transform 220ms cubic-bezier(.2, .9, .2, 1), box-shadow 260ms cubic-bezier(.2, .9, .2, 1);
     display: inline-block;
     min-width: 100px;
     text-align: center;
+    color: var(--color-text);
+    background: transparent;
+    will-change: transform, box-shadow;
+    overflow: visible;
 }
 
-.main-nav a:hover {
-    color: #2c3e50;
-    background-color: #f0f0f0;
+/* animated underline (grows from center) */
+.main-nav a::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: center;
+    width: calc(100% - 20px);
+    height: 2px;
+    background: var(--color-primary);
+    border-radius: 2px;
+    transition: transform 220ms cubic-bezier(.2, .9, .2, 1), opacity 200ms ease;
+    opacity: 0;
+    pointer-events: none;
 }
 
+/* hover/focus effects for links */
+.main-nav a:hover,
+.main-nav a:focus {
+    color: var(--color-text);
+    background-color: color-mix(in srgb, var(--color-surface-muted) 85%, transparent);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--neutral-0) 6%, transparent);
+}
+
+.main-nav a:hover::before,
+.main-nav a:focus::before {
+    transform: translateX(-50%) scaleX(1);
+    opacity: 1;
+}
+
+/* active / keyboard focus */
 .main-nav a:active,
 .main-nav a:focus {
-    color: #1a252f;
-    background-color: #e0e0e0;
+    color: var(--color-text);
+    background-color: var(--color-bg-alt);
+}
+
+/* keep strong, accessible focus ring for keyboard users */
+.main-nav a:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--color-primary) 14%, transparent);
+    outline-offset: 4px;
 }
 
 /* Responsive Design */
@@ -84,5 +146,27 @@
 
     .site-title {
         font-size: 1.5rem;
+    }
+
+    /* reduce motion on small screens for perceived performance */
+    .site-header,
+    .site-title,
+    .main-nav a {
+        transition: none !important;
+        transform: none !important;
+        box-shadow: none !important;
+    }
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .site-header,
+    .site-title,
+    .main-nav a,
+    .main-nav a::before {
+        transition: none !important;
+        animation: none !important;
+        transform: none !important;
+        will-change: auto;
     }
 }
