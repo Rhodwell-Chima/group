@@ -1,0 +1,78 @@
+
+:root {
+    --color-primary: #00ff99;
+    --color-secondary: #6600ff;
+    --color-accent: #ff6600;
+
+    --color-bg: #f6fff5;
+    --color-bg-alt: #e6fff5;
+
+    --color-surface: #edffe6;
+    --color-surface-muted: #f3f4f6;
+
+    --color-text: #111827;
+    --color-text-muted: #6b7280;
+    --color-text-inverse: #ffffff;
+    --color-text-link: var(--color-primary);
+
+    --color-border: #030a00;
+    --color-border-strong: #081a00;
+
+    --color-success: #16a34a; /* Success messages */
+    --color-warning: #f59e0b; /* Warnings */
+    --color-error: #dc2626; /* Errors / destructive actions */
+    --color-info: #0ea5e9; /* Informational messages */
+
+
+    --neutral-100: #f8f9faff;
+    --neutral-90: #e9ecefff;
+    --neutral-80: #dee2e6ff;
+    --neutral-70: #ced4daff;
+    --neutral-60: #adb5bdff;
+    --neutral-50: #6c757dff;
+    --neutral-40: #495057ff;
+    --neutral-30: #343a40ff;
+    --neutral-20: #212529ff;
+    --neutral-10: #121416ff;
+    --neutral-0: #000000ff;
+}
+
+@media (prefers-color-scheme: dark) {
+    --color-primary: #00e68a; /* slightly tuned for contrast on dark bg */
+    --color-secondary: #9a6bff;
+    --color-accent: #ff8a3b;
+
+    --color-bg: #071512;
+    --color-bg-alt: #0b2319;
+    --color-surface: #0e2518;
+    --color-surface-muted: #0b1a12;
+
+    /* Text */
+    --color-text: #e6fbf2;
+    --color-text-muted: #9bb29f;
+    --color-text-inverse: #071512;
+    --color-text-link: var(--color-primary);
+
+    /* Borders */
+    --color-border: #0b361f;
+    --color-border-strong: #082815;
+
+    /* Status colors (kept readable on dark) */
+    --color-success: #16e66a;
+    --color-warning: #ffb84d;
+    --color-error: #ff6b6b;
+    --color-info: #6fd3ff;
+
+    /* Neutral scale (dark variants) */
+    --neutral-100: #0b0d0dff;
+    --neutral-90: #111316ff;
+    --neutral-80: #17191aff;
+    --neutral-70: #1e2224ff;
+    --neutral-60: #272b2eff;
+    --neutral-50: #313538ff;
+    --neutral-40: #3c4044ff;
+    --neutral-30: #484c50ff;
+    --neutral-20: #575b5fff;
+    --neutral-10: #6b6f73ff;
+    --neutral-0: #ffffffcc; /* used for subtle overlays on dark (semi-transparent white) */
+}
