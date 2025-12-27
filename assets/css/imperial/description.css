@@ -12,6 +12,8 @@
 }
 
 .description-image-container {
+    position: relative;
+    overflow: hidden;
     width: 100%;
     aspect-ratio: 4 / 3;
     overflow: hidden;
@@ -131,6 +133,18 @@
 .description-image-container:focus-within {
     outline: 3px solid color-mix(in srgb, var(--color-info) 12%, transparent);
     outline-offset: 6px;
+}
+
+.matrix-canvas {
+    position: absolute;
+    inset: 0; /* top:0; right:0; bottom:0; left:0; */
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+    z-index: 2;
+    mix-blend-mode: screen;
+    opacity: 0.95;
 }
 
 @media (max-width: 768px) {
