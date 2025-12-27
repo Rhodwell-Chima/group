@@ -1,0 +1,95 @@
+/* css */
+
+.container.description-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}
+
+/* image wrapper keeps aspect ratio and hides overflow */
+.description-image-container {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    background: linear-gradient(180deg, #f6f6f8, #efefef);
+    transition: transform 300ms ease, box-shadow 300ms ease;
+}
+
+/* image fills the wrapper */
+.description-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    box-sizing: border-box;
+    padding: 0.5rem;
+    font-size: 0.95rem;
+    color: #666;
+    text-align: center;
+
+    /* truncate long alt text with ellipsis */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* optional: enable multiline clamp (WebKit browsers only) */
+/* apply by adding the `multiline-alt` class to the image element when you want multi-line */
+.description-image.multiline-alt {
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* change number for more lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: clip;
+}
+
+/* subtle scale on hover/focus for interactivity */
+.description-image-container:hover .description-image,
+.description-image-container:focus-within .description-image {
+    transform: scale(1.04);
+}
+
+/* content styles */
+.description-content {
+    padding: 0.25rem 0.5rem;
+}
+
+.section-title {
+    margin: 0 0 0.5rem 0;
+    font-size: clamp(1.25rem, 2.2vw, 1.8rem);
+    line-height: 1.15;
+    color: #111;
+}
+
+.section-description {
+    margin: 0;
+    color: #555;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* responsive: stack on small screens and tighten spacing */
+@media (max-width: 768px) {
+    .container.description-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 1.5rem 1rem;
+    }
+
+    .description-image-container {
+        aspect-ratio: 16 / 9;
+    }
+
+    .description-content {
+        padding-top: 0.5rem;
+    }
+}
