@@ -16,8 +16,8 @@
     aspect-ratio: 4 / 3;
     overflow: hidden;
     border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-    background: linear-gradient(180deg, #f6f6f8, #efefef);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--neutral-0) 8%, transparent);
+    background: linear-gradient(180deg, var(--color-surface-muted), var(--color-surface));
     transition: transform 300ms ease, box-shadow 300ms ease;
 }
 
@@ -27,9 +27,11 @@
     object-fit: cover;
     display: block;
     box-sizing: border-box;
-    padding: 0.5rem;
+    padding: 0;
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
     font-size: 0.95rem;
-    color: #666;
+    color: var(--color-text-muted);
     text-align: center;
 
     /* truncate long alt text with ellipsis */
@@ -60,14 +62,75 @@
     margin: 0 0 0.5rem 0;
     font-size: clamp(1.25rem, 2.2vw, 1.8rem);
     line-height: 1.15;
-    color: #111;
+    color: var(--color-text);
 }
 
 .section-description {
     margin: 0;
-    color: #555;
+    color: var(--color-text-muted);
     font-size: 1rem;
     line-height: 1.6;
+}
+
+.description-image-container,
+.description-image,
+.description-content,
+.section-title,
+.section-description {
+    transition: transform 320ms cubic-bezier(.2, .9, .2, 1),
+    box-shadow 320ms cubic-bezier(.2, .9, .2, 1),
+    opacity 260ms ease,
+    filter 300ms cubic-bezier(.2, .9, .2, 1),
+    color 260ms ease;
+    will-change: transform, box-shadow, opacity, filter;
+}
+
+/* subtle lift and stronger shadow on hover / keyboard focus */
+.description-image-container:hover,
+.description-image-container:focus-within {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px color-mix(in srgb, var(--neutral-0) 12%, transparent);
+}
+
+/* image scale and gentle brightness/contrast change */
+.description-image-container:hover .description-image,
+.description-image-container:focus-within .description-image {
+    transform: scale(1.06);
+    filter: brightness(1.03) contrast(1.02);
+}
+
+/* make the content react when the container is hovered (title lifts, description fades slightly) */
+.container.description-grid:hover .section-title,
+.description-image-container:hover ~ .description-content .section-title {
+    transform: translateY(-4px);
+    color: var(--color-info);
+}
+
+.section-title {
+    transition: transform 300ms cubic-bezier(.2, .9, .2, 1), color 300ms ease;
+    transform-origin: left center;
+}
+
+/* soften description on hover so title stands out */
+.container.description-grid:hover .section-description,
+.description-image-container:hover ~ .description-content .section-description {
+    opacity: 0.92;
+    transform: translateY(-2px);
+}
+
+.section-description {
+    transition: transform 280ms cubic-bezier(.2, .9, .2, 1), opacity 240ms ease;
+}
+
+/* ensure multiline alt variant also animates nicely */
+.description-image.multiline-alt {
+    transition: -webkit-line-clamp 300ms ease, transform 300ms cubic-bezier(.2, .9, .2, 1);
+}
+
+/* focus-visible outline for keyboard users */
+.description-image-container:focus-within {
+    outline: 3px solid color-mix(in srgb, var(--color-info) 12%, transparent);
+    outline-offset: 6px;
 }
 
 @media (max-width: 768px) {
@@ -83,5 +146,17 @@
 
     .description-content {
         padding-top: 0.5rem;
+    }
+
+    .description-image-container,
+    .description-image,
+    .description-content,
+    .section-title,
+    .section-description,
+    .description-image.multiline-alt {
+        transition: none !important;
+        animation: none !important;
+        will-change: auto;
+        transform: none !important;
     }
 }
