@@ -170,10 +170,26 @@
                     <input type="email" id="email" name="email" required>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone">
-            </div>
+            <div class="form-group phone-group">
+  <label for="phone">Phone Number</label>
+  <div class="phone-input">
+    <select id="country-code" name="country-code">
+      <option value="+260" selected>🇿🇲 +260</option>
+      <option value="+27">🇿🇦 +27</option>
+      <option value="+254">🇰🇪 +254</option>
+      <option value="+234">🇳🇬 +234</option>
+      <option value="+44">🇬🇧 +44</option>
+      <option value="+1">🇺🇸 +1</option>
+    </select>
+
+    <input
+      type="tel"
+      id="phone"
+      name="phone"
+      placeholder="e.g. 977 123 456"
+    />
+  </div>
+</div>
             <div class="form-group">
                 <label for="contact-reason">Reason for contacting</label>
                 <select id="contact-reason" name="contact-reason">
