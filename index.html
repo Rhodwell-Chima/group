@@ -14,15 +14,78 @@
 <div id=""scanLine"></div>
 <canvas id ="neuralParticles"></canvas>
 
+<!----BCISImulator notifictaion -->
+<div class ="bci-notification" id ="bciNotification">
+    <div class="notification-header">
+        <span class ="notifictaion-icon"><!_----add icon(maybe a brain) ---></span>
+        <strong>NEURAL INTERFACE v1.0</strong>
+    </div>
+    <div class="notification-message" id="notificationMessage">
+        System initializing...Tracking neural patterns...
+    </div>
+    <div class="notification-timestamp" id="notificationTimeStamp">00:00:00</div>
+</div>
+ <div id="bci-visualization">
+        <div class="bci-header">
+            <span> NEURAL INTERFACE</span>
+            <span class="bci-status" id="bciStatus">ACTIVE</span>
+        </div>
+        <div class="bci-metrics">
+            <div class="metric">
+                <div class="metric-label">
+                    <span>FOCUS</span>
+                    <span id="focus-frequency">α: 8-12 Hz</span>
+                </div>
+                <div class="metric-bar">
+                    <div class="metric-fill" id="focus-bar"></div>
+                </div>
+                <div class="metric-value" id="focus-value">50%</div>
+            </div>
+            <div class="metric">
+                <div class="metric-label">
+                    <span>ATTENTION</span>
+                    <span id="attention-band">β: 13-30 Hz</span>
+                </div>
+                <div class="metric-bar">
+                    <div class="metric-fill" id="attention-bar"></div>
+                </div>
+                <div class="metric-value" id="attention-value">50%</div>
+            </div>
+            <div class="metric">
+                <div class="metric-label">
+                    <span>ENGAGEMENT</span>
+                    <span id="engagement-wave">γ: 31-100 Hz</span>
+                </div>
+                <div class="metric-bar">
+                    <div class="metric-fill" id="engagement-bar"></div>
+                </div>
+                <div class="metric-value" id="engagement-value">75%</div>
+            </div>
+        </div>
+        <div class="bci-brainwave">
+            <canvas id="brainwave-canvas"></canvas>
+        </div>
+        <div class="bci-controls">
+            <button class="bci-btn" id="bciCalibrate">CALIBRATE</button>
+            <button class="bci-btn" id="bciExport">EXPORT DATA</button>
+            <button class="bci-btn" id="bciToggle">MINIMIZE</button>
+        </div>
+    </div>
+
+
 <header role="banner" class="site-header">
     <div class="container header-grid">
-        <h1 class="site-title">THE GROUP</h1>
+        <h1 class="site-title">
+            THE GROUP
+            <span class="neural-mode" id = "neuralMode"> NEURAL MODE: ACTIVE</span>
+        </h1>
         <nav role="navigation" aria-label="Main navigation" class="main-nav">
             <ul>
                 <li><a href="#description">Description</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#">Team</a></li>
                 <li><a href="#contact">Contacts</a></li>
+                <li><button class="bci-nav-btn" id="bciToggleBtn">TOGGLE BCI</button></li>
             </ul>
         </nav>
     </div>
@@ -45,6 +108,10 @@
                     digital solutions. Our work blends solid engineering principles with thoughtful design,
                     delivering products that are reliable, maintainable, and ready for real-world use.
                 </p>
+                <div class="bci-tagline">
+                        <span class="neural-tag"> NEURAL INTERFACE ACTIVE</span>
+                        <span class="focus-level">Focus Level: <span id="liveFocus">0%</span></span>
+                    </div>
             </div>
         </div>
 
@@ -53,6 +120,13 @@
     <section id="projects" class="section projects-section">
         <div class="container">
             <h2 class="section-title">Our Projects</h2>
+            <div class="bci-project-info">
+                    <p>Projects highlighted based on your neural attention patterns</p>
+                    <div class="attention-bar">
+                        <div class="attention-fill" id="projectAttentionFill"></div>
+                    </div>
+                </div>
+
             <div class="projects-grid">
                 <div class="project-card">
                     <img src="https://via.placeholder.com/800x450?text=Project+Atlas" alt="Project Atlas"

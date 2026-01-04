@@ -1,14 +1,19 @@
 
 :root {
-    --color-primary: #00ff99;
+    --color-primary: #00ff88;
     --color-secondary: #6600ff;
     --color-accent: #ff6600;
 
-    --color-bg: #f6fff5;
+    --glow: 0 0 20px var(--primary);
+    --glow-strong: 0 0 40px var(--primary);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    --color-bg: #0a0a12;
     --color-bg-alt: #e6fff5;
 
-    --color-surface: #edffe6;
+    --surface: #151522;
     --color-surface-muted: #f3f4f6;
+    --surface-light: #1e1e2e;
 
     --color-text: #111827;
     --color-text-muted: #6b7280;

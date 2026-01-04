@@ -1,242 +1,294 @@
-/* the class (BCISimulator ) is below this  */
-class BCISimulator { 
-    constructor() {
-        this.focusLevel = 50;
-        this.attention = 50;
-        this.engament = 75;
-        this.stress = 20;
-        this.meditation = 60;
-
-        this.sessionStart = Date.now();
-        this.isActive = true;
-        this.notificationQueue = [];
-        this.currentField = null;
-        this.typingMetrics = { speed: 0, accuracy: 0,consistency: 0};
-        this.projectFocus = {};
-        this.lasyMouseMove = Date.now();
-        this.scrollActivity = 0;
-
-        this.init();
-    }
-
-    init() {
-        this.setupNeuralParticles();
-        this.setupEventListeners();
-        this.startUpdates();
-        this.initProjectTracking();
-        this.showNotification(
-            "Neural Interface v1.0",
-            "BCI System initialized. Tracking neural patterns.......",
-            "system"
-        );
-        this.updateSessionTimer();   
-    }
-    setupNeuralParticles() {
-        this.particlesCanvas = document.getElementsById('neuralParticles');
-        this.particlesCtx = this.particlesCanvas.getContext('2d');
-        const resizeCanvas = () => {
-            this.particlesCanvas.width = window.innerWidth;
-            this.particlesCanvas.height = window.innerHeight;
-            this.particles = this.createParticles();
-        };
-
-        resizeCanvas();
-        window.addEventListener('resize',resizeCanvas);
-
-        const animate = () => {
-            this.drawParticles();
-            requestAnimationFrame(animate);
-        };
-        animate();
-    }
-
-    createParticles() {
-        const particles = [];
-        const particleCount = Math.floor(window.innerwidth * window.innerHeight) / 4000;
-        for(let i=0; i< particleCount; i++) {
-            particles.push({
-                x: Math.random() * this.particlesCanvas.width,
-                y: Math.random() * this.particlesCanvas.height,
-                vx: (Math.random() - 0.5) * 0.5,
-                vy: (Math.random() -0.5) * 0.5,
-                radius: Math.random() *2 + 0.5,
-                color: 'rgba(0,255,136,${Math.random() * 0.3 + 0.1})',
-                life: 1,
-                decay: Math.random() * 0.01 + 0.001
-            });
-        }
-        return particles;
-    }
-    drawParticles() {
-        const ctx = this.particleCtx;
-        const width  = this.particlesCanvas.width;
-        const height = this.particlesCanvas.height;
-
-        ctx.fillStyle = 'rgba(10, 10, 18 , 0.05)';
-        ctx.fillRect(0,0,width,height);
-
-        this.particles.forEach((p,i) => {
-            p.x += p.vx;
-            p.x += p.vy;
-
-            if(p.x <0) p.x = width;
-            if(p.x > width) p.x =0;
-            if(p.y <0)p.y = height;
-            if(p.y>height)p.y = 0;
-
-            p.life -=p.decay;
-            if(p.life <= 0) {
-                p.x = Math.random() * width;
-                piy = Math.random() * height;
-                p.life = 1;
-
+ // BCISimulator Class - Complete Implementation
+        class BCISimulator {
+            constructor() {
+                // Neural Metrics
+                this.focusLevel = 50;
+                this.attention = 50;
+                this.engagement = 75;
+                this.stress = 20;
+                this.meditation = 60;
+                
+                // Session Data
+                this.sessionStart = Date.now();
+                this.isActive = true;
+                this.notificationQueue = [];
+                this.currentField = null;
+                this.typingMetrics = { speed: 0, accuracy: 0, consistency: 0 };
+                this.projectFocus = {};
+                this.lastMouseMove = Date.now();
+                this.scrollActivity = 0;
+                
+                // Initialize
+                this.init();
             }
-            ctx.beginPath();
-            ctx.arc(p.x,p.y,p.radius * p.life, 0, Math.PI * 2);
-            ctx.fillStyle = p.color;
-            ctx.fill();
-            const maxDistance = 100;
-            this.particles.forEach((p2,j) => {
-                if(i>=j) return;
-
-                const dx = p2.x - p.x;
-                const dy =p2.y - p.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-
-                if(distance < maxDistance){
-                    ctx.beginPath();
-                    ctx.moveTo(p.x, p.y);
-                    ctx.lineTo(p2.x,p2.y);
-                    ctx.strokeStyle = 'rgba(0, 255, 136, ${(1 -distance/maxDistance) * 0.1*p.life * p2.life})';
-                    ctx.linewidth = 0.5;
-                    ctx.stroke();
+            
+            init() {
+                // Create neural particles
+                this.setupNeuralParticles();
+                
+                // Set up event listeners
+                this.setupEventListeners();
+                
+                // Start update loops
+                this.startUpdates();
+                
+                // Initialize project tracking
+                this.initProjectTracking();
+                
+                // Show welcome notification
+                this.showNotification(
+                    "Neural Interface v2.1",
+                    "BCI system initialized. Tracking neural patterns...",
+                    "system"
+                );
+                
+                // Update session timer
+                this.updateSessionTimer();
+            }
+            
+            setupNeuralParticles() {
+                this.particlesCanvas = document.getElementById('neuralParticles');
+                this.particlesCtx = this.particlesCanvas.getContext('2d');
+                
+                const resizeCanvas = () => {
+                    this.particlesCanvas.width = window.innerWidth;
+                    this.particlesCanvas.height = window.innerHeight;
+                    this.particles = this.createParticles();
+                };
+                
+                resizeCanvas();
+                window.addEventListener('resize', resizeCanvas);
+                
+                // Animation loop
+                const animate = () => {
+                    this.drawParticles();
+                    requestAnimationFrame(animate);
+                };
+                animate();
+            }
+            
+            createParticles() {
+                const particles = [];
+                const particleCount = Math.floor((window.innerWidth * window.innerHeight) / 4000);
+                
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push({
+                        x: Math.random() * this.particlesCanvas.width,
+                        y: Math.random() * this.particlesCanvas.height,
+                        vx: (Math.random() - 0.5) * 0.5,
+                        vy: (Math.random() - 0.5) * 0.5,
+                        radius: Math.random() * 2 + 0.5,
+                        color: `rgba(0, 255, 136, ${Math.random() * 0.3 + 0.1})`,
+                        life: 1,
+                        decay: Math.random() * 0.01 + 0.001
+                    });
                 }
-            });
-        });
-    }
-    setupEventListeners(){
-        document.addEventListener('mousemove', (e) => {
-            this.lastMouseMove = Date.now();
-            this.focusLevel = Math.min(100, this.focusLevl +0.2);
-            this.attention = Math.min(100, this.attention + 0.1);
-
-            this.updateProjectHover(e);
-        })
-
-        let scrollTimeout;
-        window.addEventListener('scroll', () => {
-            this.engagement = Math.min(100, this.engagement + 0.3);
-            this.scrollActivity++;
-
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                this.scrollActivity = Math.max(0, this.scrollActivity -1 );
-            },1000);
-            });
-
-            document.querySelectorAll('input, textaread,select').forEach(field => {
-                field.addEventListener('focus', (e) => {
-                    this.currentField = e.target;
-                    this.showNotification(
-                        "Field Analysis",
-                        `Analyzing neural response for ${e.target.name || 'field'}...`,
-                        "field"
-                    );
+                
+                return particles;
+            }
+            
+            drawParticles() {
+                const ctx = this.particlesCtx;
+                const width = this.particlesCanvas.width;
+                const height = this.particlesCanvas.height;
+                
+                // Clear with fade effect
+                ctx.fillStyle = 'rgba(10, 10, 18, 0.05)';
+                ctx.fillRect(0, 0, width, height);
+                
+                // Update and draw particles
+                this.particles.forEach((p, i) => {
+                    // Update position
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    
+                    // Boundary check with wrap-around
+                    if (p.x < 0) p.x = width;
+                    if (p.x > width) p.x = 0;
+                    if (p.y < 0) p.y = height;
+                    if (p.y > height) p.y = 0;
+                    
+                    // Life decay
+                    p.life -= p.decay;
+                    if (p.life <= 0) {
+                        // Reset particle
+                        p.x = Math.random() * width;
+                        p.y = Math.random() * height;
+                        p.life = 1;
+                    }
+                    
+                    // Draw particle
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius * p.life, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.fill();
+                    
+                    // Draw connections to nearby particles
+                    const maxDistance = 100;
+                    this.particles.forEach((p2, j) => {
+                        if (i >= j) return;
+                        
+                        const dx = p2.x - p.x;
+                        const dy = p2.y - p.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < maxDistance) {
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.strokeStyle = `rgba(0, 255, 136, ${(1 - distance/maxDistance) * 0.1 * p.life * p2.life})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    });
                 });
-                field.addEventLsistener('input', (e) => {
-                    this.updateTypingMetrics(e);
+            }
+            
+            setupEventListeners() {
+                // Mouse movement affects focus
+                document.addEventListener('mousemove', (e) => {
+                    this.lastMouseMove = Date.now();
+                    this.focusLevel = Math.min(100, this.focusLevel + 0.2);
+                    this.attention = Math.min(100, this.attention + 0.1);
+                    
+                    // Update project hover effects
+                    this.updateProjectHover(e);
                 });
-            });
-
-            document.querySelectorAll('.project-card').forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    card.classList.add('bci-focus');
-                    this.trackProjectAttention(card);
+                
+                // Scroll affects engagement
+                let scrollTimeout;
+                window.addEventListener('scroll', () => {
+                    this.engagement = Math.min(100, this.engagement + 0.3);
+                    this.scrollActivity++;
+                    
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(() => {
+                        this.scrollActivity = Math.max(0, this.scrollActivity - 1);
+                    }, 1000);
                 });
-
-                card.addEventListener('mouseleave', () => {
-                    card.classList.remove('bci-focus');
+                
+                // Typing affects metrics
+                document.querySelectorAll('input, textarea, select').forEach(field => {
+                    field.addEventListener('focus', (e) => {
+                        this.currentField = e.target;
+                        this.showNotification(
+                            "Field Analysis",
+                            `Analyzing neural response for ${e.target.name || 'field'}...`,
+                            "field"
+                        );
+                    });
+                    
+                    field.addEventListener('input', (e) => {
+                        this.updateTypingMetrics(e);
+                    });
                 });
-
-                card.querySelector('button').addEventListener('click',(e) => {
+                
+                // Project interactions
+                document.querySelectorAll('.project-card').forEach(card => {
+                    card.addEventListener('mouseenter', () => {
+                        card.classList.add('bci-focus');
+                        this.trackProjectAttention(card);
+                    });
+                    
+                    card.addEventListener('mouseleave', () => {
+                        card.classList.remove('bci-focus');
+                    });
+                    
+                    card.querySelector('button').addEventListener('click', (e) => {
+                        e.preventDefault();
+                        card.classList.add('bci-active');
+                        setTimeout(() => card.classList.remove('bci-active'), 2000);
+                        this.showNotification(
+                            "Project Engagement",
+                            `Neural patterns show high interest in ${card.querySelector('.project-title').textContent}`,
+                            "project"
+                        );
+                    });
+                });
+                
+                // Form submission
+                document.getElementById('contactForm').addEventListener('submit', (e) => {
                     e.preventDefault();
-                    card.classList.add('bci-active');
-                    setTimeout(() => card.classList.remove('bci-active'), 2000);
-                    this.showNotification(
-                        "Project Engagement",
-                        `Neural patterns show high interest in ${card.querySelector('.project-title').textContent}`,
-                        "project"
-                    );
+                    this.processFormSubmission();
                 });
-            });
-            document.getElementById('contactForm').addEventListener('submit',(e) => {
-                e.preventDefault();
-                this.processFormSubmission();
-            });
+                
+                // BCI control buttons
                 document.getElementById('bciCalibrate').addEventListener('click', () => this.calibrate());
                 document.getElementById('bciExport').addEventListener('click', () => this.exportData());
                 document.getElementById('bciToggle').addEventListener('click', () => this.togglePanel());
                 document.getElementById('bciToggleBtn').addEventListener('click', () => this.toggleBCI());
-
+                
+                // Reset form button
                 document.querySelector('button[type="reset"]').addEventListener('click', () => {
-                    this.showNotification("Neural Buffer cleared","All form data has been reset.","system");
+                    this.showNotification("Neural Buffer Cleared", "All form data has been reset.", "system");
                 });
-        }
-
-        startUpdates() {
-            setInterval(() => {
-                this.updateMetrics();
-                this.updateVisaulization();
-                this.drawBrainwaves();
-            },100);
-
-            setInterval(() => {
-                document.getElementById('liveFocus').textContent = `${Math.round(this.focusLevel)}%`;
-                document.getElementById('formFocusStatus').textContent = 
-                        `Form Focus: ${this.focusLevel > 70 ? 'High' : this.focusLevel > 40 ? 'Medium' : 'Low'}`;
-
-            }, 500);
-
-        }
-        updateMetrics() {
-            const row = Date.now();
-            const timeSinceMouseMove = now - this.lastMouseMove;
-
-            this.focusLevel = Math.max(30, this.focusLevel -0.08);
-            this.attention = Math.max(20, this.attention -0.05);
-            this.engagement = Math.max(40, this.engagement - 0.03);
-
-            if(timeSinceMouseMove > 10000) {
-                this.focusLevel = Math.max(20,this.focusLevel - 0.2);
-                this.attention = Math.max(10, this.attention -0.1);
             }
-
-            const noise = Math.random() * 3 -1.5;
-            this.focusLevel += noise;
-            this.attention += noise * 0.7;
-
-            this.focusLevel = Math.max(0, Math.min(100, this.focusLevel));
-            this.attention = Math.max(0, Math.min(100, this.attention));
-            this.engagement = Math.max(0, Math.min(100, this.engagement));
+            
+            startUpdates() {
+                // Update metrics periodically
+                setInterval(() => {
+                    this.updateMetrics();
+                    this.updateVisualization();
+                    this.drawBrainwaves();
+                }, 100);
                 
-            this.stress = 100 - ((this.focusLevel + this.attention) / 2);
-            this.meditation = (this.focusLevel + this.engagement) / 2;
-
-        }
-        updateVisualization() {
-            document.getElementById('focus-bar').style.width = `${this.focusLevel}%`;
-            document.getElementById('focus-value').textContent = `${Math.round(this.focusLevel)}%`;
+                // Update focus level indicator
+                setInterval(() => {
+                    document.getElementById('liveFocus').textContent = `${Math.round(this.focusLevel)}%`;
+                    document.getElementById('formFocusStatus').textContent = 
+                        `Form Focus: ${this.focusLevel > 70 ? 'High' : this.focusLevel > 40 ? 'Medium' : 'Low'}`;
+                }, 500);
+            }
+            
+            updateMetrics() {
+                const now = Date.now();
+                const timeSinceMouseMove = now - this.lastMouseMove;
                 
-            document.getElementById('attention-bar').style.width = `${this.attention}%`;
-            document.getElementById('attention-value').textContent = `${Math.round(this.attention)}%`;
+                // Natural decay
+                this.focusLevel = Math.max(30, this.focusLevel - 0.08);
+                this.attention = Math.max(20, this.attention - 0.05);
+                this.engagement = Math.max(40, this.engagement - 0.03);
                 
-            document.getElementById('engagement-bar').style.width = `${this.engagement}%`;
-            document.getElementById('engagement-value').textContent = `${Math.round(this.engagement)}%`;
-
-            this.updateFrequencyBands();
-            document.getElementById('projectAttentionFill').style.width = `${this.attention}%`;
-    }
-    updateFrequencyBands() {
+                // Increased decay if inactive
+                if (timeSinceMouseMove > 10000) { // 10 seconds
+                    this.focusLevel = Math.max(20, this.focusLevel - 0.2);
+                    this.attention = Math.max(10, this.attention - 0.1);
+                }
+                
+                // Add neural noise
+                const noise = Math.random() * 3 - 1.5;
+                this.focusLevel += noise;
+                this.attention += noise * 0.7;
+                
+                // Ensure bounds
+                this.focusLevel = Math.max(0, Math.min(100, this.focusLevel));
+                this.attention = Math.max(0, Math.min(100, this.attention));
+                this.engagement = Math.max(0, Math.min(100, this.engagement));
+                
+                // Calculate stress and meditation
+                this.stress = 100 - ((this.focusLevel + this.attention) / 2);
+                this.meditation = (this.focusLevel + this.engagement) / 2;
+            }
+            
+            updateVisualization() {
+                // Update bars
+                document.getElementById('focus-bar').style.width = `${this.focusLevel}%`;
+                document.getElementById('focus-value').textContent = `${Math.round(this.focusLevel)}%`;
+                
+                document.getElementById('attention-bar').style.width = `${this.attention}%`;
+                document.getElementById('attention-value').textContent = `${Math.round(this.attention)}%`;
+                
+                document.getElementById('engagement-bar').style.width = `${this.engagement}%`;
+                document.getElementById('engagement-value').textContent = `${Math.round(this.engagement)}%`;
+                
+                // Update frequency bands
+                this.updateFrequencyBands();
+                
+                // Update project attention fill
+                document.getElementById('projectAttentionFill').style.width = `${this.attention}%`;
+            }
+            
+            updateFrequencyBands() {
                 const focusFreq = document.getElementById('focus-frequency');
                 const attentionBand = document.getElementById('attention-band');
                 const engagementWave = document.getElementById('engagement-wave');
@@ -275,7 +327,8 @@ class BCISimulator {
                     engagementWave.style.color = '#ff8800';
                 }
             }
-    drawBrainwaves() {
+            
+            drawBrainwaves() {
                 const canvas = document.getElementById('brainwave-canvas');
                 const ctx = canvas.getContext('2d');
                 
@@ -345,6 +398,7 @@ class BCISimulator {
                     }, 100);
                 });
             }
+            
             trackProjectAttention(card) {
                 const title = card.querySelector('.project-title').textContent;
                 
@@ -622,19 +676,19 @@ class BCISimulator {
                         `${minutes.toString().padStart(2, '0')}:` +
                         `${seconds.toString().padStart(2, '0')}`;
                     
-                    // Simulate active users
+                   
                     const activeUsers = 1 + Math.floor(Math.random() * 5);
                     document.getElementById('activeUsers').textContent = activeUsers;
                 }, 1000);
             }
         }
         
-      
+     
         document.addEventListener('DOMContentLoaded', () => {
             // Initialize BCI
             const bci = new BCISimulator();
             
-           
+            // Smooth scrolling for navigation links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -650,9 +704,10 @@ class BCISimulator {
                 });
             });
             
-           
+            // Make BCI globally available for debugging
             window.bci = bci;
-         
+            
+            // Add random neural spikes for realism
             setInterval(() => {
                 if (Math.random() > 0.97 && bci.isActive) {
                     bci.focusLevel = Math.min(100, bci.focusLevel + 15);
@@ -663,7 +718,8 @@ class BCISimulator {
                     );
                 }
             }, 15000);
-           
+            
+            // Add glitch effect to title occasionally
             setInterval(() => {
                 if (Math.random() > 0.95) {
                     const title = document.querySelector('.site-title');
@@ -672,6 +728,7 @@ class BCISimulator {
                 }
             }, 10000);
             
+            // Initialize all project card buttons
             document.querySelectorAll('.project-card button').forEach(button => {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -685,7 +742,7 @@ class BCISimulator {
                         "project"
                     );
                     
-                   
+                    // Visual feedback
                     card.style.animation = 'none';
                     setTimeout(() => {
                         card.style.animation = 'pulse 0.5s';
