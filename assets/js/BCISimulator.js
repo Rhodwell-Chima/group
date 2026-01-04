@@ -92,11 +92,11 @@
                 const width = this.particlesCanvas.width;
                 const height = this.particlesCanvas.height;
                 
-                // Clear with fade effect
+                // should Clear with fade effect
                 ctx.fillStyle = 'rgba(10, 10, 18, 0.05)';
                 ctx.fillRect(0, 0, width, height);
                 
-                // Update and draw particles
+                // Updates and draws particles
                 this.particles.forEach((p, i) => {
                     // Update position
                     p.x += p.vx;
@@ -485,7 +485,7 @@
                     
                     // Show success animation
                     loading.style.display = 'none';
-                    btnText.textContent = '✅ Message Sent!';
+                    btnText.textContent = ' Message Sent!';
                     submitBtn.style.background = 'linear-gradient(135deg, #00ff88, #008844)';
                     
                     // Reset after delay
@@ -513,10 +513,10 @@
                 // Update icon based on type
                 const icon = notification.querySelector('.notification-icon');
                 switch(type) {
-                    case "success": icon.textContent = "✅"; break;
-                    case "error": icon.textContent = "⚠️"; break;
-                    case "project": icon.textContent = "🚀"; break;
-                    case "field": icon.textContent = "⌨️"; break;
+                    case "success": icon.textContent = ""; break;
+                    case "error": icon.textContent = ""; break;
+                    case "project": icon.textContent = ""; break;
+                    case "field": icon.textContent = ""; break;
                     default: icon.textContent = "🧠";
                 }
                 
