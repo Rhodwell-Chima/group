@@ -623,33 +623,43 @@ class BCISimulator {
     }
 
     togglePanel() {
-        const panel = document.getElementById('bci-visualization');
+        const header = document.getElementById('bci-header-id');
+        const metrics = document.getElementById('bci-metrics-id');
+        const brainwave = document.getElementById('bci-brainwave-id');
         const toggleBtn = document.getElementById('bciToggle');
 
-        if (panel.style.height === '60px') {
-            panel.style.height = '';
-            toggleBtn.textContent = 'MINIMIZE';
+        // Guard: if any element is missing, abort silently
+        if (!header || !metrics || !brainwave || !toggleBtn) return;
+
+        // Use computed style because header.style.display only reflects inline styles
+        const headerDisplay = window.getComputedStyle(header).display;
+        const isHidden = headerDisplay === 'none';
+
+        if (isHidden) {
+            // Show
+            header.style.display = 'flex';
+            metrics.style.display = 'block';
+            //brainwave.style.display = 'block';
+            // When content is visible, the button should offer to minimize
+            toggleBtn.textContent = 'Minimize';
+            toggleBtn.setAttribute('aria-expanded', 'true');
         } else {
-            panel.style.height = '60px';
-            toggleBtn.textContent = 'MAXIMIZE';
+            // Hide
+            header.style.display = 'none';
+            metrics.style.display = 'none';
+            // brainwave.style.display = 'none';
+            // When content is hidden, the button should offer to maximize
+            toggleBtn.textContent = 'Maximize';
+            toggleBtn.setAttribute('aria-expanded', 'false');
         }
     }
 
     toggleBCI() {
-        this.isActive = !this.isActive;
         const panel = document.getElementById('bci-visualization');
-        const status = document.getElementById('bciStatus');
-        const mode = document.getElementById('neuralMode');
-        const toggleBtn = document.getElementById('bciToggleBtn');
 
         if (this.isActive) {
-            panel.style.opacity = '1';
-            panel.style.pointerEvents = 'auto';
-            status.textContent = 'ACTIVE';
-            status.style.background = 'var(--primary)';
-            mode.textContent = 'NEURAL MODE: ACTIVE';
-            mode.style.color = 'var(--primary)';
-            toggleBtn.textContent = ' DISABLE BCI';
+            this.isActive = !this.isActive;
+            panel.style.display = "none";
 
             this.showNotification(
                 "Neural Interface Activated",
@@ -657,13 +667,8 @@ class BCISimulator {
                 "system"
             );
         } else {
-            panel.style.opacity = '0.3';
-            panel.style.pointerEvents = 'none';
-            status.textContent = 'STANDBY';
-            status.style.background = '#666';
-            mode.textContent = 'NEURAL MODE: STANDBY';
-            mode.style.color = '#666';
-            toggleBtn.textContent = '🧠 ENABLE BCI';
+            this.isActive = !this.isActive;
+            panel.style.display = "block";
 
             this.showNotification(
                 "Neural Interface Standby",
