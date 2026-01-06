@@ -691,8 +691,7 @@ class BCISimulator {
                 `${seconds.toString().padStart(2, '0')}`;
 
 
-            const activeUsers = 1 + Math.floor(Math.random() * 5);
-            document.getElementById('activeUsers').textContent = activeUsers;
+            document.getElementById('activeUsers').textContent = (1 + Math.floor(Math.random() * 5)).toString();
         }, 1000);
     }
 }
