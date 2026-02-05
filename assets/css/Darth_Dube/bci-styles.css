@@ -1,0 +1,326 @@
+/* ======================================== */
+/* BCI & NEURAL INTERFACE STYLES - Special Effects & Visualization */
+/* ======================================== */
+
+/* Neural Grid Background */
+#neuralGrid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: -3;
+    pointer-events: none;
+}
+
+/* Neural Particles Canvas */
+#neuralParticles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -2;
+}
+
+/* Scanning Line */
+#scanLine {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent, 
+        var(--primary), 
+        transparent);
+    z-index: 999;
+    pointer-events: none;
+    animation: scan 4s linear infinite;
+    opacity: 0.5;
+    box-shadow: var(--glow);
+}
+
+@keyframes scan {
+    0% { top: 0%; }
+    100% { top: 100%; }
+}
+
+/* BCI VISUALIZATION UI */
+#bci-visualization {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 320px;
+    background: rgba(10, 10, 18, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--primary);
+    border-radius: 15px;
+    padding: 20px;
+    color: var(--primary);
+    font-family: 'Courier New', monospace;
+    z-index: 1000;
+    box-shadow: var(--glow);
+    transition: var(--transition);
+    user-select: none;
+    overflow: hidden;
+}
+
+#bci-visualization:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--glow-strong);
+}
+
+.bci-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.bci-status {
+    background: var(--primary);
+    color: #000;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    animation: pulse-status 2s infinite;
+}
+
+@keyframes pulse-status {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.bci-metrics {
+    margin-bottom: 20px;
+}
+
+.metric {
+    margin-bottom: 15px;
+}
+
+.metric-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    margin-bottom: 8px;
+    color: #88ffcc;
+}
+
+.metric-bar {
+    width: 100%;
+    height: 10px;
+    background: rgba(0, 255, 136, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+}
+
+.metric-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), #88ff00);
+    border-radius: 5px;
+    width: 50%;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.metric-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.4), 
+        transparent);
+    animation: shimmer 2s infinite;
+}
+
+.metric-value {
+    text-align: right;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    font-weight: bold;
+    color: var(--text);
+}
+
+.bci-brainwave {
+    margin: 20px 0;
+}
+
+#brainwave-canvas {
+    width: 100%;
+    height: 70px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    display: block;
+}
+
+.bci-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.bci-btn {
+    flex: 1;
+    padding: 8px 12px;
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: var(--transition);
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+}
+
+.bci-btn:hover {
+    background: rgba(0, 255, 136, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Notification System */
+.bci-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(10, 10, 18, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--primary);
+    border-radius: 10px;
+    padding: 20px;
+    color: var(--primary);
+    max-width: 350px;
+    z-index: 1001;
+    transform: translateX(400px);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--glow);
+}
+
+.bci-notification.show {
+    transform: translateX(0);
+}
+
+.notification-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.notification-message {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #88ffcc;
+    margin-bottom: 10px;
+}
+
+.notification-timestamp {
+    font-size: 0.75rem;
+    color: #668877;
+    text-align: right;
+}
+
+/* Loading Animation */
+.bci-loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--primary);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: bci-spin 1s linear infinite;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+@keyframes bci-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Glitch Text Effect */
+.glitch {
+    position: relative;
+    display: inline-block;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 #ff0088;
+    animation: glitch-1 2s infinite linear alternate-reverse;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: 2px 0 #0088ff;
+    animation: glitch-2 3s infinite linear alternate-reverse;
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+}
+
+@keyframes glitch-1 {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+}
+
+@keyframes glitch-2 {
+    0%, 100% { transform: translate(0); }
+    25% { transform: translate(-2px, -2px); }
+    50% { transform: translate(-2px, 2px); }
+    75% { transform: translate(2px, -2px); }
+}
+
+/* Responsive adjustments for BCI components */
+@media (max-width: 768px) {
+    #bci-visualization {
+        width: 280px;
+        bottom: 10px;
+        left: 10px;
+    }
+    
+    .bci-notification {
+        max-width: 280px;
+        top: 10px;
+        right: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    #bci-visualization {
+        width: 250px;
+        padding: 15px;
+    }
+}
